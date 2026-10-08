@@ -1,0 +1,14 @@
+{
+  "title": "secDevLabs Insecure Go Project",
+  "description": "A small Go API backed by MongoDB, shipped with its source code. The database credentials it uses are written in its configuration file and in the database setup script.",
+  "question": "Find the database credentials in the application's source and use them to log in to its MongoDB.",
+  "category": "WEB",
+  "difficulty": 1,
+  "evidence_kind": "SECRET",
+  "capabilities": [
+    "hardcoded-credentials",
+    "authentication-failure",
+    "source-code-review",
+    "mongodb"
+  ]
+}

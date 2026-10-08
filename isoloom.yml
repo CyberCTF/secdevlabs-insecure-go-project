@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=https://www.isoloom.com/schema/v1.json
+# Insecure Go Project (secDevLabs, by Globo.com) as an Isoloom spec: a Go API whose MongoDB
+# credentials are hardcoded in its source, an Identification and Authentication Failure.
+# Vendored unchanged in build/api/app/ (the app folder owasp-top10-2021-apps/a7/insecure-go-project
+# of secDevLabs), built by an overlay of upstream's Dockerfile, and its MongoDB machine,
+# published as upstream does. `isoloom generate`, then `isoloom up docker`.
+version: 1
+name: secdevlabs-insecure-go-project
+
+networks:
+  lab: { cidr: 10.60.106.0/24, internet: false }
+
+machines:
+  mongodb:
+    networks: { lab: 20 }
+    services: [{ port: 27017, name: mongodb, publish: 27017 }]
+    resources: { cpus: 1, memory_mb: 512 }
+    volumes: { data: /data/db }
+    docker:
+      build: build/mongodb
+
+  api:
+    networks: { lab: 10 }
+    services: [{ port: 10002, name: api, http: true, publish: 10002 }]
+    resources: { cpus: 1, memory_mb: 512 }
+    depends_on: [mongodb]
+    docker:
+      build: build/api
+
+checks:
+  - name: the API answers (it logged in to MongoDB at start)
+    http: http://api:10002/healthcheck
+    wait: 180
+  - name: MongoDB is reachable from the network
+    tcp: mongodb:27017
+
+message: |
+  Insecure Go Project answers at http://localhost:{{ machines.api.services.0.publish }}/healthcheck
+  and its MongoDB at localhost:{{ machines.mongodb.services.0.publish }}. The source is in
+  build/api/app/: how does the API log in to its database?
