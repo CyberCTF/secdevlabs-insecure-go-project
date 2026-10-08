@@ -14,7 +14,7 @@ the vendored app folder (see [UPSTREAM.md](UPSTREAM.md)).
 
 ```bash
 isoloom generate
-isoloom up docker
+isoloom run docker
 ```
 
 Then check http://localhost:10002/healthcheck. MongoDB answers on localhost:27017. The same spec runs as Docker on a local VM (`docker-vm`), on a cloud VM
