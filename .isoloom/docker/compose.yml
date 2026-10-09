@@ -9,6 +9,9 @@ services:
   mongodb:
     build:
       context: ../../build/mongodb
+      labels:
+        isoloom.managed: 'true'
+        isoloom.environment: secdevlabs-insecure-go-project
     image: isoloom/secdevlabs-insecure-go-project-mongodb
     platform: linux/amd64
     hostname: mongodb
@@ -41,6 +44,8 @@ services:
           memory: 512M
     labels:
       isoloom.service.mongodb: tcp:27017
+      isoloom.managed: 'true'
+      isoloom.environment: secdevlabs-insecure-go-project
     restart: unless-stopped
   mongodb-routes:
     image: alpine:3.20
@@ -62,9 +67,15 @@ services:
       mongodb:
         condition: service_started
     restart: unless-stopped
+    labels:
+      isoloom.managed: 'true'
+      isoloom.environment: secdevlabs-insecure-go-project
   api:
     build:
       context: ../../build/api
+      labels:
+        isoloom.managed: 'true'
+        isoloom.environment: secdevlabs-insecure-go-project
     image: isoloom/secdevlabs-insecure-go-project-api
     platform: linux/amd64
     hostname: api
@@ -100,6 +111,8 @@ services:
           memory: 512M
     labels:
       isoloom.service.api: http:10002
+      isoloom.managed: 'true'
+      isoloom.environment: secdevlabs-insecure-go-project
     restart: unless-stopped
   api-routes:
     image: alpine:3.20
@@ -121,6 +134,9 @@ services:
       api:
         condition: service_started
     restart: unless-stopped
+    labels:
+      isoloom.managed: 'true'
+      isoloom.environment: secdevlabs-insecure-go-project
   isoloom-check:
     image: curlimages/curl:8.11.1
     profiles:
@@ -145,6 +161,9 @@ services:
         condition: service_healthy
       api-routes:
         condition: service_healthy
+    labels:
+      isoloom.managed: 'true'
+      isoloom.environment: secdevlabs-insecure-go-project
   isoloom-check-mongodb:
     image: curlimages/curl:8.11.1
     profiles:
@@ -164,6 +183,9 @@ services:
         condition: service_healthy
       api-routes:
         condition: service_healthy
+    labels:
+      isoloom.managed: 'true'
+      isoloom.environment: secdevlabs-insecure-go-project
   isoloom-check-api:
     image: curlimages/curl:8.11.1
     profiles:
@@ -183,6 +205,9 @@ services:
         condition: service_healthy
       api-routes:
         condition: service_healthy
+    labels:
+      isoloom.managed: 'true'
+      isoloom.environment: secdevlabs-insecure-go-project
   isoloom-probe-amd64:
     image: busybox:1.37.0-musl
     platform: linux/amd64
@@ -194,12 +219,24 @@ services:
     - isoloom-probe-amd64:/probe
     network_mode: none
     restart: no
+    labels:
+      isoloom.managed: 'true'
+      isoloom.environment: secdevlabs-insecure-go-project
 networks:
   lab:
     ipam:
       config:
       - subnet: 10.60.106.0/24
         gateway: 10.60.106.1
+    labels:
+      isoloom.managed: 'true'
+      isoloom.environment: secdevlabs-insecure-go-project
 volumes:
-  mongodb-data: {}
-  isoloom-probe-amd64: {}
+  mongodb-data:
+    labels:
+      isoloom.managed: 'true'
+      isoloom.environment: secdevlabs-insecure-go-project
+  isoloom-probe-amd64:
+    labels:
+      isoloom.managed: 'true'
+      isoloom.environment: secdevlabs-insecure-go-project
