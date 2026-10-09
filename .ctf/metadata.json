@@ -4,11 +4,5 @@
   "question": "Find the database credentials in the application's source and use them to log in to its MongoDB.",
   "category": "WEB",
   "difficulty": 1,
-  "evidence_kind": "SECRET",
-  "capabilities": [
-    "hardcoded-credentials",
-    "authentication-failure",
-    "source-code-review",
-    "mongodb"
-  ]
+  "evidence_kind": "SECRET"
 }
