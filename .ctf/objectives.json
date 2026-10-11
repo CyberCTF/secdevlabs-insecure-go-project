@@ -1,0 +1,54 @@
+{
+  "objectives": [
+    {
+      "key": "main",
+      "title": "Read the flag",
+      "prompt": "Find the database credentials and read the flags collection.",
+      "check": {
+        "evidence": "SECRET",
+        "format": "FLAG{%s}"
+      },
+      "dev": "FLAG{dev-secdevlabs-insecure-go-project}",
+      "hints": [
+        "The source ships with its configuration.",
+        "Read about hard-coded credentials."
+      ],
+      "steps": [
+        {
+          "key": "db",
+          "title": "Identify the database",
+          "prompt": "Which database does the API use?",
+          "check": {
+            "answer": [
+              "mongodb",
+              "mongo"
+            ]
+          }
+        },
+        {
+          "key": "dbname",
+          "title": "Find the database",
+          "prompt": "Which database name does the API use?",
+          "check": {
+            "answer": [
+              "insecure_go_project"
+            ]
+          }
+        },
+        {
+          "key": "class",
+          "title": "Name the weakness",
+          "prompt": "What class of weakness is this?",
+          "check": {
+            "answer": [
+              "hardcoded credentials",
+              "hard-coded credentials",
+              "hard coded credentials",
+              "secrets in source code"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
