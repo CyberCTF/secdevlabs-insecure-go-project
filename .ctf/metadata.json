@@ -1,8 +1,11 @@
 {
+  "project_name": "cyberlabs-secdevlabs-insecure-go-project",
+  "slug": "secdevlabs-insecure-go-project",
   "title": "secDevLabs Insecure Go Project",
   "description": "A small Go API backed by MongoDB, shipped with its source code. The database credentials it uses are written in its configuration file and in the database setup script.",
-  "question": "Find the database credentials in the application's source, log in to its MongoDB and read the flags collection.",
-  "category": "WEB",
+  "category": "web",
   "difficulty": 1,
-  "evidence_kind": "SECRET"
+  "evidence_kind": "SECRET",
+  "capabilities": [],
+  "question": "Find the database credentials in the application's source, log in to its MongoDB and read the flags collection."
 }
